@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://AssetmarkInc@dev.azure.com/AssetmarkInc/Core/_git/EWM30DataOps
+    targetRevision: guest-book-config
+    path: guestbook
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: myspace
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
